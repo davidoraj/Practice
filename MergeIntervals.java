@@ -17,13 +17,10 @@ class Interval implements Comparable<Interval>
 
 public class MergeIntervals
 {
-	public ArrayList<Interval> merge(ArrayList<Interval> intervals)
+	
+	private ArrayList<Interval> merge_intervals(ArrayList<Interval> intervals)
 	{
-		Collections.sort(intervals);
 		int len = intervals.size();
-		System.out.println("\nAfter Sort:");
-		print(intervals);
-		
 		for(int i=0; i<len; i++)
 		{
 			int j = i + 1;
@@ -41,6 +38,16 @@ public class MergeIntervals
 		}
 		
 		return intervals;
+	}
+	
+	public ArrayList<Interval> merge(ArrayList<Interval> intervals)
+	{
+		Collections.sort(intervals);
+		int len = intervals.size();
+		System.out.println("\nAfter Sort:");
+		print(intervals);
+		
+		return merge_intervals(intervals);
 	}
 	
 	public ArrayList<Interval> merge(ArrayList<Interval> intervals, Interval k)
@@ -76,23 +83,7 @@ public class MergeIntervals
 		if(i == len) intervals.add(new Interval(k.a, k.b));
 		
 		// Adjust intervals if further merge is possible
-		for(i=0; i<len; i++)
-		{
-			int j = i + 1;
-			while(j<len && (intervals.get(j).a <= intervals.get(i).b))
-			{
-				intervals.get(i).b = Math.max(intervals.get(j).b, intervals.get(i).b);
-				j++;
-			}
-			
-			if(j > i+1)
-			{
-				intervals.subList(i+1, j).clear();
-				len = intervals.size();
-			}
-		}
-		
-		return intervals;
+		return merge_intervals(intervals);
 	}
 
 	public void print(ArrayList<Interval> intervals)
