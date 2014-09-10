@@ -27,7 +27,7 @@ public class MergeIntervals
 		for(int i=0; i<len; i++)
 		{
 			int j = i + 1;
-			while(j<len && (intervals.get(j).b <= intervals.get(i).b || intervals.get(j).a <= intervals.get(i).b))
+			while(j<len && (intervals.get(j).a <= intervals.get(i).b))
 			{
 				intervals.get(i).b = Math.max(intervals.get(j).b, intervals.get(i).b);
 				j++;
@@ -72,13 +72,14 @@ public class MergeIntervals
 			}
 		}
 		
+		// add interval in the end
 		if(i == len) intervals.add(new Interval(k.a, k.b));
 		
 		// Adjust intervals if further merge is possible
 		for(i=0; i<len; i++)
 		{
 			int j = i + 1;
-			while(j<len && (intervals.get(j).b <= intervals.get(i).b || intervals.get(j).a <= intervals.get(i).b))
+			while(j<len && (intervals.get(j).a <= intervals.get(i).b))
 			{
 				intervals.get(i).b = Math.max(intervals.get(j).b, intervals.get(i).b);
 				j++;
@@ -117,7 +118,7 @@ public class MergeIntervals
 		mi.print(intervals);
 		
 		intervals = mi.merge(intervals);
-		intervals = mi.merge(intervals, new Interval(9,18));
+		intervals = mi.merge(intervals, new Interval(16,18));
 		
 		System.out.println("\nAfter Merge:");
 		mi.print(intervals);
